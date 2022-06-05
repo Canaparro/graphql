@@ -6,4 +6,12 @@ type Query {
 type Customer {
     id: ID
     name: String
+    address: Address
+}
+
+type Address {
+    id: ID
+    customerId: Int
+    street: String
+    number: Int
 }
