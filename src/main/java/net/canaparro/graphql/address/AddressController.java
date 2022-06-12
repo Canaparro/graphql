@@ -1,6 +1,11 @@
 package net.canaparro.graphql.address;
 
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.BatchMapping;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 
 import net.canaparro.graphql.customer.Customer;
@@ -13,9 +18,15 @@ public class AddressController {
 	public AddressController(
 			final AddressService addressService ) {this.addressService = addressService;}
 
-	@SchemaMapping(typeName = "Customer")
-	public Address address( Customer customer ) {
-		return addressService.getAddressByCustomerId( customer.id() );
+	@BatchMapping
+	public Map<Customer, Address> address( List<Customer> customers ) {
+		return addressService.getCustomerAddresses( customers );
+	}
+
+	@MutationMapping
+	public Address createOrUpdateAddress( @Argument AddressInput addressInput ) {
+		Address address = new Address(addressInput.id(), addressInput.customerId(), addressInput.street(), addressInput.number());
+		return addressService.createOrUpdateAddress(address);
 	}
 
 }

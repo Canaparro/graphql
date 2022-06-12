@@ -1,23 +1,28 @@
 package net.canaparro.graphql.customer;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceStub implements CustomerService {
 
-	private final Map<Long, Customer> customerMap = Map.of( 1L, new Customer( 1L, "John" ), 2L,
-			new Customer( 2L, "Bob" ) );
+	private final CustomerApi customerApi;
+
+	public CustomerServiceStub( final CustomerApi customerApi ) {this.customerApi = customerApi;}
 
 	@Override
 	public List<Customer> getCustomers() {
-		return List.copyOf( customerMap.values() );
+		return customerApi.getAllCustomers();
 	}
 
 	@Override
 	public Customer getCustomerById( final Long id ) {
-		return customerMap.get( id );
+		return customerApi.getCustomer( id );
+	}
+
+	@Override
+	public Customer createOrUpdateCustomer( final Customer customer ) {
+		return customerApi.createOrUpdateCustomer( customer );
 	}
 }

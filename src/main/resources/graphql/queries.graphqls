@@ -15,3 +15,20 @@ type Address {
     street: String
     number: Int
 }
+
+type Mutation {
+    createOrUpdateCustomer(customerInput: CustomerInput): Customer
+    createOrUpdateAddress(addressInput: AddressInput): Address
+}
+
+input CustomerInput {
+    id: ID
+    name: String
+}
+
+input AddressInput {
+    id: ID
+    customerId: Int
+    street: String
+    number: Int
+}

@@ -2,11 +2,12 @@ package net.canaparro.graphql.customer;
 
 import java.util.List;
 
-public interface CustomerService {
+public interface CustomerApi {
 
-	List<Customer> getCustomers();
+	Customer getCustomer(Long customerId);
 
-	Customer getCustomerById(Long id);
+	List<Customer> getAllCustomers();
 
 	Customer createOrUpdateCustomer( Customer customer );
+
 }
